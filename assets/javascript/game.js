@@ -27,17 +27,34 @@ document.getElementById("remaining").textContent = guesses;
 
 document.onkeyup = function(event) {                              
   var userInput = event.key;
-  if(word.indexOf(userInput) > -1) {
-   //push correct word into the correct place in the answer array
-   answerArray.forEach(function() {
-     //what goes here to update the answer array at the correct location with the correct letter
+  
+  var l = word.length 
+  var i = 0
+  while(i<l){
+
+      console.log(word[i],userInput)
+      if (word[i]===userInput){
+        answerArray[i]=userInput;
+      document.getElementById("current-word").textContent = answerArray;
+        console.log("hi",answerArray)
+      }
+
+      i++
+
+  }
+
+
+  // if(word.indexOf(userInput) > -1) {
+  //  //push correct word into the correct place in the answer array
+  //  answerArray.forEach(function() {
+  //    //what goes here to update the answer array at the correct location with the correct letter
            
-   }); 
-   document.getElementById("current-word").textContent = answerArray;
-  } else {
-    wrongAnswerArray.push(userInput);
-    document.getElementById("guessed").textContent = wrongAnswerArray;
-    guesses --; 
-    document.getElementById("remaining").textContent = guesses; 
-  }                    
+  //  }); 
+  //  document.getElementById("current-word").textContent = answerArray;
+  // } else {
+  //   wrongAnswerArray.push(userInput);
+  //   document.getElementById("guessed").textContent = wrongAnswerArray;
+  //   guesses --; 
+  //   document.getElementById("remaining").textContent = guesses; 
+  // }                    
 };  
