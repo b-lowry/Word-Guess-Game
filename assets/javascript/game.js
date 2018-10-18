@@ -25,18 +25,19 @@ document.getElementById("remaining").textContent = guesses;
   //if in word then push to array and display on document
   //if not in word than push to other array and subtract one of the guesses remaining
 
-document.onkeyup = function(event) {
+document.onkeyup = function(event) {                              
   var userInput = event.key;
-  for(var i = 0; i < word.charAt[i]; i++) {
-    return i;                       //How do I grab each letter in the randomly selected word?
-  }
-
-  if(userInput.toLowerCase() === word[i]) {
-    //display the correct letter guessed on the answerArray
-    answerArray.push(userInput);                                         //need a method that adds to proper space in array not push to end of entire thing 
-    document.getElementById("current-word").textContent = answerArray;  
-  } else if (userInput !== word[i]) {
+  if(word.indexOf(userInput) > -1) {
+   //push correct word into the correct place in the answer array
+   answerArray.forEach(function() {
+     //what goes here to update the answer array at the correct location with the correct letter
+           
+   }); 
+   document.getElementById("current-word").textContent = answerArray;
+  } else {
     wrongAnswerArray.push(userInput);
     document.getElementById("guessed").textContent = wrongAnswerArray;
-  }
+    guesses --; 
+    document.getElementById("remaining").textContent = guesses; 
+  }                    
 };  
