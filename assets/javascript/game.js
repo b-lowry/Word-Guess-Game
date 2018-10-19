@@ -11,6 +11,8 @@ for (var i = 0; i < word.length; i++) {
 }
 
 var wrongAnswerArray = [];
+var wins = 0;
+var losses = 0;
 
 //Display the spaces on page
 document.getElementById("current-word").textContent = answerArray;
@@ -25,23 +27,28 @@ document.getElementById("remaining").textContent = guesses;
   //if in word then push to array and display on document
   //if not in word than push to other array and subtract one of the guesses remaining
 
-document.onkeyup = function(event) {                              
+document.onkeyup = function(event) {
   var userInput = event.key;
-  
   var l = word.length 
   var i = 0
+
+  if(word[i] !== userInput) {
+    wrongAnswerArray.push(" " + userInput);
+    document.getElementById("guessed").textContent = wrongAnswerArray;
+  }
+  
+
   while(i<l){
 
       console.log(word[i],userInput)
       if (word[i]===userInput){
         answerArray[i]=userInput;
-      document.getElementById("current-word").textContent = answerArray;
-        console.log("hi",answerArray)
+        document.getElementById("current-word").textContent = answerArray;
+        console.log("hi",answerArray);
       }
-
-      i++
-
-  }
+      i++ 
+    } 
+  };
 
 
   // if(word.indexOf(userInput) > -1) {
@@ -57,4 +64,4 @@ document.onkeyup = function(event) {
   //   guesses --; 
   //   document.getElementById("remaining").textContent = guesses; 
   // }                    
-};  
+ 
