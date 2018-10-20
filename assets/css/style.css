@@ -1,0 +1,13 @@
+body {
+    background-color: #d2efdc;
+}
+
+.img-side {
+    opacity: 0.7;
+    max-height: 90%;
+}
+
+#contain-1 {
+    background-color: #1c6024;
+    border-radius: 50%;
+}

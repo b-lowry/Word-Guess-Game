@@ -1,72 +1,105 @@
-function reset() {
-  wrongAnswerArray = [];
-  document.getElementById("guessed").textContent = wrongAnswerArray;
-  guesses = 10;
-  document.getElementById("remaining").textContent = guesses;
-  word = words[Math.floor(Math.random() *words.length)];
-  answerArray = [];
-  for (var i = 0; i < word.length; i++) {
-    answerArray[i] = "__";
-  }
-  document.getElementById("current-word").textContent = answerArray;
-}
+//List of words to use in game
+var words = ["football","holding", "colts","broncos", "cowboys","interception","penalty","touchdown","rush","fieldgoal", "raiders","celebration","injury","brady","giants","odell","concussion", "death"];
 
-//Define array of words for computer to select one
-var words = ["cowboys", "eagles", "quarterback", "runningback", "chargers", "holding", "penalty", "interception", "fumble", "touchdown", "fieldgoal"];
-
-//Get computer to select one of the words from the array at random
-var word = words[Math.floor(Math.random() * words.length)];
-
-//Loop through the word and add underscores to equal how many spaces need to be added
-var answerArray = [];
-for (var i = 0; i < word.length; i++) {
-  answerArray[i] = " __ ";
-}
-
-var wrongAnswerArray = [];
+//List of variables used
+var word;
+var answer;
 var wins = 0;
 var losses = 0;
-var answer = [];
+var lettersAlready = [];
+var guesses;
+var i = 0;
+var wrongAnswer = [];
 
-//Display the spaces on page
-document.getElementById("current-word").textContent = answerArray;
+//resets the game back to beginning state
+function resetGame(event) {
 
-//Number of guesses user starts with
-var guesses = 10; 
-document.getElementById("remaining").textContent = guesses;
+//Generates a rando word
+word = words[Math.floor(Math.random() * words.length)];
 
-document.onkeyup = function(event) {
-  var userInput = event.key;
-  var l = word.length 
-  var i = 0
+answer = [];
+lettersUsed = []
+guesses = 10
 
-  if(word[i] !== userInput) {
-    wrongAnswerArray.push(" " + userInput);
-    document.getElementById("guessed").textContent = wrongAnswerArray;
-    guesses --;
-    document.getElementById("remaining").textContent = guesses;
-    if(guesses === 0) {
-      losses ++;
-      document.getElementById("losses").textContent = losses;
-      //function
-      reset();  
-  } 
-};
+console.log(word);
+for (var i = 0; i < word.length; i++) {
+    answer.push("_");
 
-  if(answerArray.join("") === word) {
-    wins ++;
+}
+
+
+    document.getElementById("lettersAlready").textContent = wrongAnswer.join();
     document.getElementById("wins").textContent = wins;
-    reset();
-  }
+    document.getElementById("currentWord").textContent = answer.join(" ");
+    document.getElementById("guessRemain").textContent = guesses;
+    document.getElementById("lettersAlready").textContent = lettersAlready.join(", ");
+}
 
-  while(i<l){
 
-      console.log(word[i],userInput)
-      if (word[i] === userInput){
-        answerArray[i]=userInput;
-        document.getElementById("current-word").textContent = answerArray;
-        console.log("hi",answerArray);
-      }
-      i++ 
+document.onkeyup = function (event) {
+    var userGuess = event.key.toLowerCase();
+    lettersAlready.push(" " + userGuess);
+    
+    
+    var letterFound = false;
+    for (var i = 0; i < word.length; i++) {
+
+        if (word[i] === userGuess) {
+            answer[i] = word[i];
+            letterFound = true;
+
+        }
+
     }
-  };
+
+    if (letterFound === false && answer.includes(userGuess)) {
+        lettersUsed.push(userGuess);
+        guesses--;
+    }
+
+    if(word[i] !== userGuess) {
+        wrongAnswer.push(" " + userGuess);
+        document.getElementById("lettersAlready").textContent = wrongAnswer;
+        guesses--;
+        document.getElementById("guessRemain").textContent = guesses;
+    }
+
+    if (guesses === 0) {
+        losses++;
+        lettersAlready = [];
+        document.getElementById("losses").textContent = losses;
+        alert("You lost the big game");
+        resetGame();
+    }
+
+    if (answer.join('') === word) {
+        wins++;
+        lettersAlready = [];
+        alert("Its almost as good as winning the superbowl...");
+        setTimeout(resetGame, 1200);
+    
+        while(i<word.length){
+
+            console.log(word[i],userGuess)
+            if (word[i]===userGuess){
+              answer[i]===userGuess;
+              document.getElementById("currentWord").textContent = answer;
+              console.log("hi",answer);
+            }
+            i++ 
+          }
+    }
+
+
+    document.getElementById("currentWord").textContent = answer.join(" ");
+    document.getElementById("lettersAlready").textContent = lettersAlready.join(", ");
+    document.getElementById("guessRemain").textContent = guesses;
+    document.getElementById("wins").textContent = wins;
+    document.getElementById("losses").textContent = losses;
+    
+     
+
+}
+
+
+document.addEventListener("DOMContentLoaded", resetGame);
